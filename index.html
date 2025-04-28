@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DACD Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-3">
+        <div class="container">
+            <h1>DACD Prediction System</h1>
+            <p>Predict Diabetes-Associated Cognitive Diseases</p>
+        </div>
+    </header>
+
+    <div class="container my-5">
+        <form method="POST" action="/predict">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="patientid" class="form-label">Patient ID</label>
+                    <input type="text" id="patientid" name="patientid" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" id="age" name="age" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="gender" class="form-label">Gender (0: Male, 1: Female)</label>
+                    <input type="number" id="gender" name="gender" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="ethnicity" class="form-label">Ethnicity</label>
+                    <input type="text" id="ethnicity" name="ethnicity" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="education_level" class="form-label">Education Level</label>
+                    <input type="text" id="education_level" name="education_level" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="bmi" class="form-label">BMI</label>
+                    <input type="number" step="0.1" id="bmi" name="bmi" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="smoking" class="form-label">Smoking (0: No, 1: Yes)</label>
+                    <input type="number" id="smoking" name="smoking" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="alcohol_consumption" class="form-label">Alcohol Consumption (0: No, 1: Yes)</label>
+                    <input type="number" id="alcohol_consumption" name="alcohol_consumption" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="physical_activity" class="form-label">Physical Activity (0: Low, 1: High)</label>
+                    <input type="number" id="physical_activity" name="physical_activity" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="diet_quality" class="form-label">Diet Quality (0: Poor, 1: Good)</label>
+                    <input type="number" id="diet_quality" name="diet_quality" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="sleep_quality" class="form-label">Sleep Quality (0: Poor, 1: Good)</label>
+                    <input type="number" id="sleep_quality" name="sleep_quality" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="family_history_alzheimers" class="form-label">Family History of Alzheimer's (0: No, 1: Yes)</label>
+                    <input type="number" id="family_history_alzheimers" name="family_history_alzheimers" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="cardiovascular_disease" class="form-label">Cardiovascular Disease (0: No, 1: Yes)</label>
+                    <input type="number" id="cardiovascular_disease" name="cardiovascular_disease" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="diabetes" class="form-label">Diabetes (0: No, 1: Yes)</label>
+                    <input type="number" id="diabetes" name="diabetes" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="depression" class="form-label">Depression (0: No, 1: Yes)</label>
+                    <input type="number" id="depression" name="depression" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="head_injury" class="form-label">Head Injury (0: No, 1: Yes)</label>
+                    <input type="number" id="head_injury" name="head_injury" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="hypertension" class="form-label">Hypertension (0: No, 1: Yes)</label>
+                    <input type="number" id="hypertension" name="hypertension" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="systolic_bp" class="form-label">Systolic BP</label>
+                    <input type="number" id="systolic_bp" name="systolic_bp" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="diastolic_bp" class="form-label">Diastolic BP</label>
+                    <input type="number" id="diastolic_bp" name="diastolic_bp" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="cholesterol_total" class="form-label">Total Cholesterol</label>
+                    <input type="number" id="cholesterol_total" name="cholesterol_total" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="cholesterol_ldl" class="form-label">LDL Cholesterol</label>
+                    <input type="number" id="cholesterol_ldl" name="cholesterol_ldl" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="cholesterol_hdl" class="form-label">HDL Cholesterol</label>
+                    <input type="number" id="cholesterol_hdl" name="cholesterol_hdl" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="cholesterol_triglycerides" class="form-label">Cholesterol Triglycerides</label>
+                    <input type="number" id="cholesterol_triglycerides" name="cholesterol_triglycerides" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="mmse" class="form-label">MMSE Score</label>
+                    <input type="number" id="mmse" name="mmse" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="functional_assessment" class="form-label">Functional Assessment</label>
+                    <input type="number" id="functional_assessment" name="functional_assessment" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="memory_complaints" class="form-label">Memory Complaints (0: No, 1: Yes)</label>
+                    <input type="number" id="memory_complaints" name="memory_complaints" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="behavioral_problems" class="form-label">Behavioral Problems (0: No, 1: Yes)</label>
+                    <input type="number" id="behavioral_problems" name="behavioral_problems" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="adl" class="form-label">ADL</label>
+                    <input type="number" id="adl" name="adl" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="confusion" class="form-label">Confusion (0: No, 1: Yes)</label>
+                    <input type="number" id="confusion" name="confusion" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="disorientation" class="form-label">Disorientation (0: No, 1: Yes)</label>
+                    <input type="number" id="disorientation" name="disorientation" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="personality_changes" class="form-label">Personality Changes (0: No, 1: Yes)</label>
+                    <input type="number" id="personality_changes" name="personality_changes" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="difficulty_completing_tasks" class="form-label">Difficulty Completing Tasks (0: No, 1: Yes)</label>
+                    <input type="number" id="difficulty_completing_tasks" name="difficulty_completing_tasks" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100">Predict</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2025 DACD Prediction. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
